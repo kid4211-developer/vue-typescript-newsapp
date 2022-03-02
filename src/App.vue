@@ -1,29 +1,73 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <spinner :loading="loading"></spinner>
+    <tool-bar></tool-bar>
+    <transition name="routing-fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import ToolBar from "./components/ToolBar.vue";
+import Spinner from "./components/SpinnerComp.vue";
+import bus from "./utils/bus";
+// import { MutationTypes } from "./store/mutations";
+// import { ActionTypes } from "./store/actions";
 
 export default Vue.extend({
-  name: "App",
   components: {
-    HelloWorld,
+    ToolBar,
+    Spinner,
+  },
+  data() {
+    return {
+      loading: false,
+    };
+  },
+  methods: {
+    onProgress() {
+      this.loading = true;
+    },
+    offProgress() {
+      this.loading = false;
+    },
+  },
+  async created() {
+    // this.$store.state.news;
+    // this.$store.commit(MutationTypes.SET_NEWS)
+    // this.$store.dispatch(ActionTypes.FETCH_NEWS)
+    bus.$on("on:progress", this.onProgress);
+    bus.$on("off:progress", this.offProgress);
   },
 });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
+}
+
+a {
+  color: #34495e;
+  text-decoration: none;
+}
+a:hover {
+  color: #42b883;
+  text-decoration: underline;
+}
+a.router-link-active {
+  text-decoration: underline;
+}
+
+/* Router Transition */
+.routing-fade-enter-active,
+.routing-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.routing-fade-enter, .routing-fade-leave-to
+/* .routing-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
