@@ -3,10 +3,12 @@ import store from "../../store";
 
 function setRequestOptions(instance: AxiosInstance) {
   instance.interceptors.request.use(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (config: any) => {
+    (config) => {
       const token = store.getters["auth/token"];
-      config.headers.Authorization = token;
+      if (config.headers) {
+        config.headers.authorization = token;
+      }
+
       return config;
     },
     (error) => {

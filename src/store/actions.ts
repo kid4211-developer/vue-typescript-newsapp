@@ -1,10 +1,12 @@
-import { fetchNews, NewsItem } from "@/api";
+import { fetchAsk, fetchJobs, fetchNews, NewsItem } from "@/api";
 import { ActionContext } from "vuex";
 import { Mutations, MutationTypes } from "./mutations";
 import { RootState } from "./state";
 
 enum ActionTypes {
   FETCH_NEWS = "FETCH_NEWS",
+  FETCH_ASK = "FETCH_ASK",
+  FETCH_JOBS = "FETCH_JOBS",
 }
 
 type MyActionContext = {
@@ -15,6 +17,16 @@ const actions = {
   async [ActionTypes.FETCH_NEWS](context: MyActionContext, payload?: NewsItem[]) {
     const { data } = await fetchNews();
     context.commit(MutationTypes.SET_NEWS, data);
+    return data;
+  },
+  async [ActionTypes.FETCH_ASK](context: MyActionContext, payload?: NewsItem[]) {
+    const { data } = await fetchAsk();
+    context.commit(MutationTypes.SET_ASK, data);
+    return data;
+  },
+  async [ActionTypes.FETCH_JOBS](context: MyActionContext, payload?: NewsItem[]) {
+    const { data } = await fetchJobs();
+    context.commit(MutationTypes.SET_JOBS, data);
     return data;
   },
 };

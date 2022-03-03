@@ -4,6 +4,7 @@ import { ItemView, UserView } from "../views";
 import createListView from "../views/CreateListView";
 import bus from "../utils/bus";
 import store from "../store/index";
+import { ActionTypes } from "@/store/actions";
 
 Vue.use(VueRouter);
 
@@ -20,13 +21,6 @@ export default new VueRouter({
       component: createListView("NewsView"),
       async beforeEnter(routeTo: Route, routeFrom: Route, next: NavigationGuardNext<Vue>) {
         bus.$emit("on:progress");
-        // try {
-        //   await store.dispatch("FETCH_LIST", routeTo.name);
-        //   next();
-        // } catch (err) {
-        //   console.log(err);
-        //   // next('/error') : 실행시 이동하고자 하는 에러페이지
-        // }
         next();
       },
     },
@@ -37,7 +31,7 @@ export default new VueRouter({
       async beforeEnter(routeTo: Route, routeFrom: Route, next: NavigationGuardNext<Vue>) {
         bus.$emit("on:progress");
         try {
-          await store.dispatch("FETCH_LIST", routeTo.name);
+          await store.dispatch(ActionTypes.FETCH_ASK);
           next();
         } catch (err) {
           console.log(err);
@@ -51,7 +45,7 @@ export default new VueRouter({
       async beforeEnter(routeTo: Route, routeFrom: Route, next: NavigationGuardNext<Vue>) {
         bus.$emit("on:progress");
         try {
-          await store.dispatch("FETCH_LIST", routeTo.name);
+          await store.dispatch(ActionTypes.FETCH_JOBS);
           next();
         } catch (err) {
           console.log(err);

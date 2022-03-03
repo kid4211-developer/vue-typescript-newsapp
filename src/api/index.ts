@@ -10,8 +10,8 @@ const api = {
 
 export interface NewsItem {
   comments_count: number;
-  domain: string;
-  id: number;
+  domain: string | null;
+  id: number | null;
   points: number;
   time: number;
   time_ago: string;
@@ -25,11 +25,11 @@ function fetchNews(): AxiosPromise<NewsItem[]> {
   return axios.get(api.news);
 }
 
-function fetchAsk() {
+function fetchAsk(): AxiosPromise<NewsItem[]> {
   return axios.get(api.ask);
 }
 
-function fetchJobs() {
+function fetchJobs(): AxiosPromise<NewsItem[]> {
   return axios.get(api.jobs);
 }
 

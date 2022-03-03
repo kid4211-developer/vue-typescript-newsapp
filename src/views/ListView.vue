@@ -25,7 +25,14 @@ export default Vue.extend({
     },
   },
   created() {
-    this.getNews();
+    const { name } = this.$route;
+    if (name === "ask") {
+      this.newsItems = this.$store.state.ask;
+    } else if (name === "jobs") {
+      this.newsItems = this.$store.state.jobs;
+    } else {
+      this.getNews();
+    }
   },
 });
 </script>

@@ -4,6 +4,9 @@ export const getters = {
   fetchedNews(state: RootState) {
     return state.news;
   },
+  fetchedAsk(state: RootState) {
+    return state.ask;
+  },
 };
 
 export type Getters = typeof getters;
